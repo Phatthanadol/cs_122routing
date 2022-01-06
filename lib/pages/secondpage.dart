@@ -62,6 +62,7 @@ class _SecondpageState extends State<Secondpage> {
             child: TextFormField(
               controller: _stdid,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              keyboardType: TextInputType.number,
               validator: (value) {
                 if (value!.isEmpty) {
                   return "Please, Input Your Student ID";
