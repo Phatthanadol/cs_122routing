@@ -39,43 +39,46 @@ class _SecondpageState extends State<Secondpage> {
 
   Widget form() {
     return Container(
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextFormField(
-              controller: _name,
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return "Please, Input Your Name";
-                }
-                return null;
-              },
-              decoration: InputDecoration(
-                  labelText: 'Name',
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(16)))),
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                controller: _name,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Please, Input Your Name";
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                    labelText: 'Name',
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(16)))),
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextFormField(
-              controller: _stdid,
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              keyboardType: TextInputType.number,
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return "Please, Input Your Student ID";
-                }
-                return null;
-              },
-              decoration: InputDecoration(
-                  labelText: 'Student ID',
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(16)))),
-            ),
-          )
-        ],
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                controller: _stdid,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                keyboardType: TextInputType.number,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Please, Input Your Student ID";
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                    labelText: 'Student ID',
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(16)))),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -83,14 +86,16 @@ class _SecondpageState extends State<Secondpage> {
   Widget submitbutton() {
     return ElevatedButton(
         onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => Thirdpage(
-                  stdID: _stdid.text,
-                  stdName: _name.text,
-                ),
-              ));
+          if (_formKey.currentState!.validate()) {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Thirdpage(
+                    stdID: _stdid.text,
+                    stdName: _name.text,
+                  ),
+                ));
+          }
         },
         child: const Text('Send Info to 3rd page'));
   }
